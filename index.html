@@ -37,6 +37,35 @@ a{color:inherit;text-decoration:none}
 a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .mincho{font-family:'Zen Old Mincho',serif}
 
+/* works (before/after) */
+.works-note{font-size:13px;color:var(--sumi-soft);margin-bottom:26px}
+.works-grid{
+  display:grid;grid-template-columns:1fr 56px 1fr;
+  gap:18px;align-items:center;
+}
+.works-item{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 6px 22px rgba(28,25,21,.14)}
+.works-item img{width:100%;height:100%;object-fit:cover;display:block}
+.works-label{
+  position:absolute;top:12px;left:12px;
+  background:var(--sumi);color:var(--paper);
+  font-size:12px;font-weight:700;letter-spacing:.18em;
+  padding:5px 14px;border-radius:4px;
+}
+.works-item.after .works-label{background:var(--gold);color:var(--white)}
+.works-arrow{
+  text-align:center;color:var(--gold);
+  font-size:30px;font-weight:900;line-height:1;
+}
+.works-cap{font-size:12px;color:var(--sumi-soft);margin-top:14px;text-align:right}
+
+/* flow visual */
+.flow-visual{border-radius:8px;overflow:hidden;box-shadow:0 6px 22px rgba(28,25,21,.14);margin-bottom:40px}
+.flow-visual img{width:100%;max-height:340px;object-fit:cover;display:block}
+.flow-visual figcaption{font-size:11.5px;color:var(--sumi-soft);padding-top:8px;text-align:right}
+
+/* footer logo */
+.footer .flogo{width:58px;height:58px;border-radius:50%;margin:0 auto 12px;display:block}
+
 /* ===== header ===== */
 .header{
   position:sticky;top:0;z-index:100;
@@ -92,12 +121,6 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offse
   width:100%;
   display:flex;align-items:center;gap:40px;
 }
-.hero-enso{
-  position:absolute;
-  left:-40px;top:50%;transform:translateY(-50%);
-  width:520px;height:520px;
-  opacity:.5;pointer-events:none;
-}
 .hero-copy{position:relative}
 .hero-catch-wrap{
   position:relative;
@@ -120,11 +143,12 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offse
   color:var(--white);
   line-height:1.32;
   text-align:center;
-  height:min(38vh,300px);
+  height:auto;
   text-shadow:0 2px 18px rgba(0,0,0,.65);
   font-size:clamp(26px,4.7vh,42px);
   letter-spacing:.08em;
 }
+.hero-catch span{white-space:nowrap}
 .hero-catch .l2{color:var(--gold-light)}
 .hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .hero-tag{
@@ -301,14 +325,50 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offse
   .contact-grid{grid-template-columns:1fr}
   .header-cta .btn,.header-tel{display:none}
   .fixed-cta{display:grid}
-  .hero{min-height:74vh}
-  .hero-in{gap:22px;padding:56px 20px}
-  .hero-catch{font-size:clamp(24px,6.6vw,36px);height:min(34vh,260px)}
-  .hero-catch-wrap{width:min(80vw,330px);height:min(80vw,330px)}
+
+  /* hero: stack vertically, switch catch to horizontal for stability */
+  .hero{min-height:auto}
+  .hero-in{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:28px;
+    padding:48px 22px 56px;
+  }
+  .hero-catch-wrap{
+    width:min(72vw,300px);
+    height:min(72vw,300px);
+  }
+  .hero-catch{
+    writing-mode:horizontal-tb;
+    height:auto;
+    font-size:clamp(26px,7.4vw,38px);
+    line-height:1.28;
+    letter-spacing:.06em;
+  }
+  .hero-catch span{display:inline-block;padding-left:.5em}
+  .works-grid{grid-template-columns:1fr;gap:14px}
+  .works-arrow{transform:rotate(90deg);font-size:26px}
+  .hero-body{max-width:100%}
+  .hero-lead{font-size:clamp(17px,4.8vw,21px)}
+  .hero-tags{justify-content:center}
+  .hero-text{font-size:14.5px}
+  .hero-btns{justify-content:center}
+  .hero-btns .btn{font-size:16px;padding:14px 24px}
+  .hero-note{text-align:center}
+
   .section{padding:64px 20px}
   .flow-item{grid-template-columns:70px 1fr;gap:16px}
   .company-table th{width:118px;padding:14px;font-size:13.5px}
   .company-table td{padding:14px;font-size:14px}
+}
+
+/* header: keep brand text on one line, never overflow */
+@media(max-width:480px){
+  .brand-name{font-size:19px}
+  .brand-sub{font-size:10px}
+  .brand img{width:44px;height:44px}
+  .header-in{padding:9px 16px;gap:10px}
 }
 </style>
 </head>
@@ -419,8 +479,31 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offse
   </div>
 </section>
 
+<!-- ===== WORKS (image) ===== -->
+<section class="section alt" id="works">
+  <div class="section-in">
+    <div class="sec-head">
+      <span class="sec-eyebrow mincho">施工イメージ</span>
+      <h2 class="sec-title mincho">更地まで、責任を持って。<small>BEFORE / AFTER</small></h2>
+    </div>
+    <p class="works-note">古い建物の解体から、廃棄物の適正処理、整地・お引き渡しまで。<br>「壊したあと」まで見据えた、きれいな更地をお返しします。</p>
+    <div class="works-grid">
+      <figure class="works-item before">
+        <span class="works-label">BEFORE</span>
+        <img src="images/before.jpg" alt="解体前の木造家屋(イメージ)">
+      </figure>
+      <div class="works-arrow" aria-hidden="true">→</div>
+      <figure class="works-item after">
+        <span class="works-label">AFTER</span>
+        <img src="images/after.jpg" alt="解体・整地後の更地(イメージ)">
+      </figure>
+    </div>
+    <p class="works-cap">※実際の施工事例は現在準備中です。写真はイメージです。</p>
+  </div>
+</section>
+
 <!-- ===== PRICE ===== -->
-<section class="section alt" id="price">
+<section class="section" id="price">
   <div class="section-in">
     <div class="sec-head">
       <span class="sec-eyebrow mincho">料金について</span>
@@ -446,12 +529,16 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offse
 </section>
 
 <!-- ===== FLOW ===== -->
-<section class="section" id="flow">
+<section class="section alt" id="flow">
   <div class="section-in">
     <div class="sec-head">
       <span class="sec-eyebrow mincho">工事の流れ</span>
       <h2 class="sec-title mincho">お問い合わせから、<br>お引き渡しのその先まで<small>FLOW</small></h2>
     </div>
+    <figure class="flow-visual">
+      <img src="images/genba.jpg" alt="養生シートで囲った解体現場と運搬トラック(イメージ)">
+      <figcaption>※写真はイメージです</figcaption>
+    </figure>
     <div class="flow">
       <div class="flow-item">
         <div class="flow-num"></div>
@@ -567,6 +654,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offse
 </main>
 
 <footer class="footer">
+  <img class="flogo" src="images/logo.png" alt="忠謙工業ロゴ">
   <div class="fbrand mincho">忠謙工業</div>
   <div>福岡県北九州市小倉北区長浜町13-18/解体工事業登録 福岡県知事 第1708号</div>
   <div style="margin-top:10px">© 2026 Chuken Kogyo. All rights reserved.</div>
